@@ -4,7 +4,7 @@
 
 //Display the current date in the header
 $(document).ready(function(){
-  $('#currentDay').text(dayjs().format ('MMMM DD, YYYY'));
+  $('#currentDay').text(dayjs().format('MMMM DD, YYYY'));
 
   //Create the time block rows
   function createTimeBlocks() {
@@ -16,11 +16,11 @@ $(document).ready(function(){
       var hourElement = $('<div>')
         .addClass('col-2 col-md-1 hour text-center py-3')
         .text(dayjs().hour(hour).format('hA'));
-      var descriptionTextArea = $('<p>')
+      var descriptionTextArea = $('<textarea>')
         .addClass('col-8 col-md-10 description')
         .attr('id', `hour-${hour}`);
       var saveButton = $('<button>')
-        .addClass('btn savebtn col-2 cold-md-1')
+        .addClass('btn saveBtn col-2 col-md-1')
         .attr('aria-label', 'save')
         .html('<i class = "far fa-save" aria-hidden="true"></i>');
       
@@ -29,7 +29,23 @@ $(document).ready(function(){
     }
   }
   createTimeBlocks();
+  updateHourlyStyles();
 
+  //Update color-coding of time blocks based on the current time
+  function updateHourlyStyles() {
+    var currentHour = dayjs().hour();
+
+    $('.time-block').each(function() {
+      var blockHour = parseInt($(this).find('.hour').text());
+      if (blockHour < currentHour) {
+        $(this).removeClass('present future').addClass('past');
+      } else if (blockHour === currentHour) {
+        $(this).removeClass('past future').addClass('present');
+      } else {
+        $(this).removeClass('past present').addClass('future');
+      }
+    });
+  }
 })
 
 //$(function () {
