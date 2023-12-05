@@ -1,6 +1,36 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+
+//Display the current date in the header
+$(document).ready(function(){
+  $('#currentDay').text(dayjs().format ('MMMM DD, YYYY'));
+
+  //Create the time block rows
+  function createTimeBlocks() {
+    var startHour = 9;
+    var endHour = 17;
+
+    for (var hour = startHour; hour === endHour; hour++) {
+      var timeBlock = $('<div>').addclass('row time-block');
+      var hourElement = $('<div>')
+        .addclass('col-2 col-md-1 hour text-center py-3')
+        .text(dayjs().hour(hour).format('hA'));
+      var descriptionTextArea = $('<p>')
+        .addclass('col-8 col-md-10 description')
+        .attr('id', `hour-${hour}`);
+      var saveButton = $('<button>')
+        .addclass('btn savebtn col-2 cold-md-1')
+        .attr('aria-label', 'save')
+        .html('<i class = "far fa-save" aria-hidden="true"></i>');
+      
+        timeBlock.append(hourElement, descriptionTextArea, saveButton);
+        $('.container-lg').append(timeBlock);
+    }
+  }
+  createTimeBlocks();
+})
+
 $(function () {
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
