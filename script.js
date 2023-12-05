@@ -11,16 +11,16 @@ $(document).ready(function(){
     var startHour = 9;
     var endHour = 17;
 
-    for (var hour = startHour; hour === endHour; hour++) {
-      var timeBlock = $('<div>').addclass('row time-block');
+    for (var hour = startHour; hour <= endHour; hour++) {
+      var timeBlock = $('<div>').addClass('row time-block');
       var hourElement = $('<div>')
-        .addclass('col-2 col-md-1 hour text-center py-3')
+        .addClass('col-2 col-md-1 hour text-center py-3')
         .text(dayjs().hour(hour).format('hA'));
       var descriptionTextArea = $('<p>')
-        .addclass('col-8 col-md-10 description')
+        .addClass('col-8 col-md-10 description')
         .attr('id', `hour-${hour}`);
       var saveButton = $('<button>')
-        .addclass('btn savebtn col-2 cold-md-1')
+        .addClass('btn savebtn col-2 cold-md-1')
         .attr('aria-label', 'save')
         .html('<i class = "far fa-save" aria-hidden="true"></i>');
       
@@ -29,9 +29,10 @@ $(document).ready(function(){
     }
   }
   createTimeBlocks();
+
 })
 
-$(function () {
+//$(function () {
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
     // local storage. HINT: What does `this` reference in the click listener
@@ -50,5 +51,5 @@ $(function () {
     // attribute of each time-block be used to do this?
     //
     // TODO: Add code to display the current date in the header of the page.
-  });
+  //});
   
