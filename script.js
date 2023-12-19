@@ -27,7 +27,7 @@ $(document).ready(function(){
   //Create the time block rows
   function createTimeBlocks() {
     var startHour = 9;
-    var endHour = 21;
+    var endHour = 17;
 
     for (var hour = startHour; hour <= endHour; hour++) {
       var timeBlock = $('<div>')
