@@ -27,7 +27,7 @@ $(document).ready(function(){
   //Create the time block rows
   function createTimeBlocks() {
     var startHour = 9;
-    var endHour = 17;
+    var endHour = 21;
 
     for (var hour = startHour; hour <= endHour; hour++) {
       var timeBlock = $('<div>')
@@ -51,19 +51,21 @@ $(document).ready(function(){
   }
   createTimeBlocks();
   updateHourlyStyles();
+  //calling the loadsavedevents function from below to help with persisting local storage data on the page.
+  loadSavedEvents();
 
   //Update color-coding of time blocks based on the current time
   function updateHourlyStyles() {
     var currentHour = dayjs().hour();
 
     $('.time-block').each(function() {
-      var blockHour = parseInt($(this).find('.hour').text());
+      var blockHour = parseInt($(this).find('.hour').attr('id').split('-')[1]);
       if (blockHour < currentHour) {
-        $(this).removeClass('present future').addClass('past');
-      } else if (blockHour === currentHour) {
-        $(this).removeClass('past future').addClass('present');
+        $(this).removeClass('present').removeClass('future').addClass('past');
+      } else if (blockHour == currentHour) {
+        $(this).removeClass('past').removeClass('future').addClass('present');
       } else {
-        $(this).removeClass('past present').addClass('future');
+        $(this).removeClass('past').removeClass('present').addClass('future');
       }
     });
   }
@@ -77,4 +79,16 @@ $(document).ready(function(){
     localStorage.setItem(hourID, description);
   });
 
-})
+  //Load saved events from local storage
+  function loadSavedEvents() {
+    $('.time-block').each(function () {
+      var hourID = $(this).find('.hour').attr('id');
+      var savedEvent = localStorage.getItem(hourID);
+
+      if (savedEvent) {
+        $(this).find('.description').val(savedEvent);
+      }
+    });
+  }
+
+});
